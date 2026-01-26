@@ -109,13 +109,13 @@ const APP_MODULES = [
     {
         name: 'IoT 平台',
         type: '外部链接',
-        target: 'https://vlab.zime.edu.cn/platform/',
+        target: 'http://leaplab.hzzc-tech.cn/user/',
         icon: '🌐'
     },
     {
         name: 'IMS 平台',
         type: '外部链接',
-        target: 'https://vlab.zime.edu.cn/platform/',
+        target: 'http://leaplab.hzzc-tech.cn/user/',
         icon: '🏭'
     },
     {

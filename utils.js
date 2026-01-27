@@ -186,21 +186,13 @@ function handleAppNavigation(app) {
             targetUrl = loginState.difyUrl;
         }
 
-        if (app.type === '本地软件调用') {
-            // 博图软件特殊处理
-            if (app.name === '博图软件') {
-                launchTiaPortal();
-            } else if (app.name === 'VC 软件') {
-                launchVisualComponents();
-            } else {
-                // 其他本地软件调用尝试
-                window.location.href = targetUrl;
-                setTimeout(() => {
-                    alert('跳转失败，请检查软件是否已安装或配置是否正确');
-                }, 2000);
-            }
+        // 博图软件和VC软件特殊处理（根据名称判断，不依赖type字段）
+        if (app.name === '博图软件') {
+            launchTiaPortal();
+        } else if (app.name === 'VC 软件') {
+            launchVisualComponents();
         } else {
-            // 外部链接和关联服务在新窗口打开
+            // 其他应用在新窗口打开
             window.open(targetUrl, '_blank');
         }
     } catch (e) {

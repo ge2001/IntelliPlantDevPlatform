@@ -277,23 +277,35 @@
                             <div class="header-subtitle">虚拟机 ${loginState.vmNumber}号 | 用户 ${loginState.studentId}</div>
                         </div>
                     </div>
-                    <button class="logout-btn" onclick="handleLogout()">退出虚拟机</button>
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                        <a href="http://leaplab.hzzc-tech.cn/user/" target="_blank" style="
+                            font-size: 12px;
+                            color: rgba(255,255,255,0.7);
+                            text-decoration: none;
+                            transition: all 0.3s ease;
+                        " onmouseover="this.style.color='white'; this.style.textDecoration='underline';" onmouseout="this.style.color='rgba(255,255,255,0.7)'; this.style.textDecoration='none';">
+                            实训
+                        </a>
+                        <button class="logout-btn" onclick="handleLogout()">退出虚拟机</button>
+                    </div>
                 </div>
             `;
 
             // 渲染应用卡片
             const appsHTML = APP_MODULES.map(app => {
-                let displayType = app.type;
+                let displayType = app.type || '';
                 // 如果有账号模板，动态替换vmNumber并换行显示
                 if (app.accountTemplate) {
                     const account = app.accountTemplate.replace(/{vmNumber}/g, loginState.vmNumber);
-                    displayType = app.type + '<br>' + account;
+                    displayType = (app.type || '') + (app.type ? '<br>' : '') + account;
                 }
+                // 如果没有显示内容，不渲染类型区域
+                const typeHTML = displayType ? `<div class="app-type">${displayType}</div>` : '';
                 return `
                     <div class="app-card" onclick="handleAppNavigation(${JSON.stringify(app).replace(/"/g, '&quot;')})">
                         <div class="app-icon">${app.icon}</div>
                         <div class="app-name">${app.name}</div>
-                        <div class="app-type">${displayType}</div>
+                        ${typeHTML}
                     </div>
                 `;
             }).join('');

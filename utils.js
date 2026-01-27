@@ -108,51 +108,51 @@ function isLoggedIn() {
 const APP_MODULES = [
     {
         name: 'IoT 平台',
-        type: '外部链接',
-        target: 'http://leaplab.hzzc-tech.cn/user/',
+        // type: '外部链接',
+        target: 'http://leapiot.hzzc-tech.cn/#/preview',
         icon: '🌐'
     },
     {
         name: 'IMS 平台',
-        type: '外部链接',
-        target: 'http://leaplab.hzzc-tech.cn/user/',
+        // type: '外部链接',
+        target: 'http://leaplab.hzzc-tech.cn/platform/#/leapIMS',
         icon: '🏭'
     },
     {
         name: '博图软件',
-        type: '本地软件调用',
+        // type: '本地软件调用',
         target: 'tportal://local/launch',
         icon: '🔧'
     },
     {
         name: 'VC 软件',
-        type: '本地软件调用',
+        // type: '本地软件调用',
         target: 'vc://local/launch',
         icon: '🎮'
     },
     {
         name: '边缘服务器',
-        type: '关联服务访问',
+        // type: '关联服务访问',
         target: 'dynamic_edge_server',
-        icon: '⚡',
-        accountTemplate: 'admin 000000'
+        icon: '⚡'
+        // accountTemplate: 'admin 000000'
     },
     {
         name: '数字化工厂',
-        type: '关联服务访问',
+        // type: '关联服务访问',
         target: 'http://linux-server:8080/digital-factory',
         icon: '🏗️'
     },
     {
         name: 'Dify',
-        type: '关联服务访问',
+        // type: '关联服务访问',
         target: 'dynamic_dify',
-        icon: '🤖',
-        accountTemplate: 'Zncj{vmNumber}@edu.cn Zncj{vmNumber}@2024!'
+        icon: '🤖'
+        // accountTemplate: 'Zncj{vmNumber}@edu.cn Zncj{vmNumber}@2024!'
     },
     {
         name: '智能教学 AI',
-        type: '预留链接',
+        // type: '预留链接',
         target: 'https://chat.cyberedu.tech/',
         icon: '🧠'
     }
@@ -169,6 +169,12 @@ function handleAppNavigation(app) {
     }
 
     try {
+        // 数字化工厂特殊处理：显示弹窗
+        if (app.name === '数字化工厂') {
+            showDigitalFactoryModal();
+            return;
+        }
+
         // 获取当前登录状态
         const loginState = getLoginState();
         
@@ -200,6 +206,226 @@ function handleAppNavigation(app) {
     } catch (e) {
         alert('跳转失败，请检查配置');
     }
+}
+
+/**
+ * 显示数字化工厂弹窗
+ */
+function showDigitalFactoryModal() {
+    // 检查弹窗是否已存在
+    if (document.getElementById('digitalFactoryModal')) {
+        return;
+    }
+
+    // 弹窗HTML
+    const modalHTML = `
+        <div id="digitalFactoryModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        ">
+            <div style="
+                background: white;
+                border-radius: 16px;
+                padding: 32px;
+                max-width: 900px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                animation: slideUp 0.3s ease;
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2 style="font-size: 24px; color: #333; font-weight: 600; margin: 0;">数字化工厂</h2>
+                    <button onclick="closeDigitalFactoryModal()" style="
+                        background: none;
+                        border: none;
+                        font-size: 28px;
+                        cursor: pointer;
+                        color: #999;
+                        padding: 0 8px;
+                        line-height: 1;
+                    ">&times;</button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                    <div onclick="handleFactoryNavigation('智能线上仓储单元')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">智能线上仓储单元</div>
+                    <div onclick="handleFactoryNavigation('成品生产线')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">成品生产线</div>
+                    <div onclick="handleFactoryNavigation('智能检测单元')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">智能检测单元</div>
+                    <div onclick="handleFactoryNavigation('MOMA单元')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">MOMA单元</div>
+                    <div onclick="handleFactoryNavigation('智能加工单元')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">智能加工单元</div>
+                    <div onclick="handleFactoryNavigation('智能装配单元')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">智能装配单元</div>
+                    <div onclick="handleFactoryNavigation('智能包装单元')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">智能包装单元</div>
+                    <div onclick="handleFactoryNavigation('智能车间')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">智能车间</div>
+                    <div onclick="handleFactoryNavigation('智能车间规划')" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 24px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">智能车间规划</div>
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            #digitalFactoryModal > div > div > div:hover {
+                background: #667eea;
+                border-color: #667eea;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+            }
+        </style>
+    </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+/**
+ * 关闭数字化工厂弹窗
+ */
+function closeDigitalFactoryModal() {
+    const modal = document.getElementById('digitalFactoryModal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => modal.remove(), 300);
+    }
+}
+
+/**
+ * 数字化工厂单元链接配置
+ */
+const FACTORY_UNITS = {
+    '智能线上仓储单元': '/zhinengxianshangcanchudanyuan/#/',
+    '成品生产线': '/chengpinshengchanxian/#/',
+    '智能检测单元': '/zhinengjiancedanyuan/#/',
+    'MOMA单元': '/momadanyuan/#/',
+    '智能加工单元': '/zhinengjiagongdanyuan/#/',
+    '智能装配单元': '/zhinengzhuangpeidanyuan/#/',
+    '智能包装单元': '/zhinengbaozhuangdanyuan/#/',
+    '智能车间': '/zhinengchejian/#/',
+    '智能车间规划': '/zhinengchejianguihua/#/'
+};
+
+/**
+ * 处理工厂导航
+ * @param {string} unit - 单元名称
+ */
+function handleFactoryNavigation(unit) {
+    closeDigitalFactoryModal();
+    
+    // 获取当前登录状态
+    const loginState = getLoginState();
+    if (!loginState) {
+        alert('请先登录系统');
+        return;
+    }
+    
+    // 根据虚拟机编号获取域名
+    const vmNumber = loginState.vmNumber;
+    let baseUrl = '';
+    
+    if (vmNumber >= 1 && vmNumber <= 5) {
+        baseUrl = `https://vd0${vmNumber}.zime.edu.cn`;
+    } else if (vmNumber === '6') {
+        // 6号虚拟机使用IP地址
+        baseUrl = 'http://10.40.6.165';
+    } else {
+        alert('未知的虚拟机编号');
+        return;
+    }
+    
+    // 获取单元路径
+    const unitPath = FACTORY_UNITS[unit];
+    if (!unitPath) {
+        alert('未知的单元名称');
+        return;
+    }
+    
+    // 拼接完整URL并打开
+    const fullUrl = baseUrl + unitPath;
+    window.open(fullUrl, '_blank');
 }
 
 /**

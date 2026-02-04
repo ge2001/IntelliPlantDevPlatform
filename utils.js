@@ -107,6 +107,12 @@ function isLoggedIn() {
  */
 const APP_MODULES = [
     {
+        name: '数字教材',
+        // type: '外部链接',
+        target: 'https://etextbookpro.hep.com.cn/web/book/1307261328892624896',
+        icon: '📚'
+    },
+    {
         name: 'IoT 平台',
         // type: '外部链接',
         target: 'http://leapiot.hzzc-tech.cn/#/preview',

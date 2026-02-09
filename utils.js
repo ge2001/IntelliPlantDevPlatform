@@ -144,20 +144,20 @@ const APP_MODULES = [
         icon: '📊'
     },
     {
-        name: '智能实训室',
+        name: '数字化实训室',
         // type: '本地软件调用',
         target: '实训室',
         icon: '🔬'
     },
     {
-        name: 'Dify',
+        name: '人工智能应用平台',
         // type: '关联服务访问',
         target: 'dynamic_dify',
         icon: '🤖'
         // accountTemplate: 'Zncj{vmNumber}@edu.cn Zncj{vmNumber}@2024!'
     },
     {
-        name: '智能教学 AI',
+        name: '小z教学助手',
         // type: '预留链接',
         target: 'https://chat.cyberedu.tech/',
         icon: '🧠'
@@ -181,8 +181,8 @@ function handleAppNavigation(app) {
             return;
         }
 
-        // 智能实训室特殊处理：显示弹窗选择软件
-        if (app.name === '智能实训室') {
+        // 数字化实训室特殊处理：显示弹窗选择软件
+        if (app.name === '数字化实训室') {
             showTrainingRoomModal();
             return;
         }
@@ -240,7 +240,7 @@ function showTrainingRoomModal() {
                 animation: slideUp 0.3s ease;
             ">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                    <h2 style="font-size: 24px; color: #333; font-weight: 600; margin: 0;">智能实训室</h2>
+                    <h2 style="font-size: 24px; color: #333; font-weight: 600; margin: 0;">数字化实训室</h2>
                     <button onclick="closeTrainingRoomModal()" style="
                         background: none;
                         border: none;

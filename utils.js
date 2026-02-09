@@ -113,6 +113,19 @@ const APP_MODULES = [
         icon: '📚'
     },
     {
+        name: '数字化工厂',
+        // type: '关联服务访问',
+        target: 'http://linux-server:8080/digital-factory',
+        icon: '🏗️'
+    },
+    {
+        name: '边缘服务器',
+        // type: '关联服务访问',
+        target: 'dynamic_edge_server',
+        icon: '⚡'
+        // accountTemplate: 'admin 000000'
+    },
+    {
         name: 'IoT 平台',
         // type: '外部链接',
         target: 'http://leapiot.hzzc-tech.cn/#/preview',
@@ -125,29 +138,16 @@ const APP_MODULES = [
         icon: '🏭'
     },
     {
-        name: '博图软件',
+        name: '智能制造大数据实训平台',
+        // type: '外部链接',
+        target: 'http://leaplab.hzzc-tech.cn/user/',
+        icon: '📊'
+    },
+    {
+        name: '智能实训室',
         // type: '本地软件调用',
-        target: 'tportal://local/launch',
-        icon: '🔧'
-    },
-    {
-        name: 'VC 软件',
-        // type: '本地软件调用',
-        target: 'vc://local/launch',
-        icon: '🎮'
-    },
-    {
-        name: '边缘服务器',
-        // type: '关联服务访问',
-        target: 'dynamic_edge_server',
-        icon: '⚡'
-        // accountTemplate: 'admin 000000'
-    },
-    {
-        name: '数字化工厂',
-        // type: '关联服务访问',
-        target: 'http://linux-server:8080/digital-factory',
-        icon: '🏗️'
+        target: '实训室',
+        icon: '🔬'
     },
     {
         name: 'Dify',
@@ -181,6 +181,12 @@ function handleAppNavigation(app) {
             return;
         }
 
+        // 智能实训室特殊处理：显示弹窗选择软件
+        if (app.name === '智能实训室') {
+            showTrainingRoomModal();
+            return;
+        }
+
         // 获取当前登录状态
         const loginState = getLoginState();
         
@@ -192,17 +198,118 @@ function handleAppNavigation(app) {
             targetUrl = loginState.difyUrl;
         }
 
-        // 博图软件和VC软件特殊处理（根据名称判断，不依赖type字段）
-        if (app.name === '博图软件') {
-            launchTiaPortal();
-        } else if (app.name === 'VC 软件') {
-            launchVisualComponents();
-        } else {
-            // 其他应用在新窗口打开
-            window.open(targetUrl, '_blank');
-        }
+        // 其他应用在新窗口打开
+        window.open(targetUrl, '_blank');
     } catch (e) {
         alert('跳转失败，请检查配置');
+    }
+}
+
+/**
+ * 显示智能实训室弹窗
+ */
+function showTrainingRoomModal() {
+    // 检查弹窗是否已存在
+    if (document.getElementById('trainingRoomModal')) {
+        return;
+    }
+
+    // 弹窗HTML
+    const modalHTML = `
+        <div id="trainingRoomModal" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease;
+        ">
+            <div style="
+                background: white;
+                border-radius: 16px;
+                padding: 32px;
+                max-width: 600px;
+                width: 90%;
+                max-height: 80vh;
+                overflow-y: auto;
+                animation: slideUp 0.3s ease;
+            ">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <h2 style="font-size: 24px; color: #333; font-weight: 600; margin: 0;">智能实训室</h2>
+                    <button onclick="closeTrainingRoomModal()" style="
+                        background: none;
+                        border: none;
+                        font-size: 28px;
+                        cursor: pointer;
+                        color: #999;
+                        padding: 0 8px;
+                        line-height: 1;
+                    ">&times;</button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    <div onclick="launchTiaPortal(); closeTrainingRoomModal();" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 32px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🔧</div>
+                        <div style="font-size: 18px; font-weight: 600; color: #333;">博图软件</div>
+                    </div>
+                    <div onclick="launchVisualComponents(); closeTrainingRoomModal();" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 32px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🎮</div>
+                        <div style="font-size: 18px; font-weight: 600; color: #333;">VC 软件</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+            @keyframes slideUp {
+                from { transform: translateY(20px); opacity: 0; }
+                to { transform: translateY(0); opacity: 1; }
+            }
+            #trainingRoomModal > div > div > div:hover {
+                background: #667eea;
+                border-color: #667eea;
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 16px rgba(102, 126, 234, 0.3);
+            }
+        </style>
+    </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
+
+/**
+ * 关闭智能实训室弹窗
+ */
+function closeTrainingRoomModal() {
+    const modal = document.getElementById('trainingRoomModal');
+    if (modal) {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => modal.remove(), 300);
     }
 }
 

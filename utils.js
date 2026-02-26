@@ -251,7 +251,7 @@ function showTrainingRoomModal() {
                         line-height: 1;
                     ">&times;</button>
                 </div>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
                     <div onclick="launchTiaPortal(); closeTrainingRoomModal();" style="
                         background: #f8f9fa;
                         border: 2px solid #e9ecef;
@@ -262,7 +262,7 @@ function showTrainingRoomModal() {
                         transition: all 0.3s ease;
                     ">
                         <div style="font-size: 48px; margin-bottom: 16px;">🔧</div>
-                        <div style="font-size: 18px; font-weight: 600; color: #333;">博图软件</div>
+                        <div style="font-size: 18px; font-weight: 600; color: #333;">西门子PLC技术实训室</div>
                     </div>
                     <div onclick="launchVisualComponents(); closeTrainingRoomModal();" style="
                         background: #f8f9fa;
@@ -274,7 +274,19 @@ function showTrainingRoomModal() {
                         transition: all 0.3s ease;
                     ">
                         <div style="font-size: 48px; margin-bottom: 16px;">🎮</div>
-                        <div style="font-size: 18px; font-weight: 600; color: #333;">VC 软件</div>
+                        <div style="font-size: 18px; font-weight: 600; color: #333;">制造仿真技术实训室</div>
+                    </div>
+                    <div onclick="window.open('https://www.720yun.com/vr/c5ejz7saka3', '_blank'); closeTrainingRoomModal();" style="
+                        background: #f8f9fa;
+                        border: 2px solid #e9ecef;
+                        border-radius: 12px;
+                        padding: 32px 16px;
+                        text-align: center;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                    ">
+                        <div style="font-size: 48px; margin-bottom: 16px;">🏭</div>
+                        <div style="font-size: 18px; font-weight: 600; color: #333;">智能车间实训室</div>
                     </div>
                 </div>
             </div>
